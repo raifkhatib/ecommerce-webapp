@@ -29,7 +29,7 @@ router.post('/', protect, async (req, res) => {
   }
 });
 
-// GET /api/orders/myorders — must be before /:id
+// GET /api/orders/myorders - must be before /:id
 router.get('/myorders', protect, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id }).populate(
@@ -37,6 +37,36 @@ router.get('/myorders', protect, async (req, res) => {
       'name price'
     );
     return res.json(orders);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+// PUT /api/orders/:id/pay
+router.put('/:id/pay', protect, async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+    if (
+      order.user.toString() !== req.user._id.toString() &&
+      req.user.role !== 'admin'
+    ) {
+      return res.status(403).json({ message: 'Not authorized' });
+    }
+    if (order.isPaid) {
+      return res.status(400).json({ message: 'Order already paid' });
+    }
+    const { paypalOrderId } = req.body;
+    if (!paypalOrderId || typeof paypalOrderId !== 'string' || paypalOrderId.trim() === '') {
+      return res.status(400).json({ message: 'A valid paypalOrderId is required' });
+    }
+    order.isPaid = true;
+    order.paidAt = new Date();
+    order.paypalOrderId = paypalOrderId;
+    const updatedOrder = await order.save();
+    return res.json(updatedOrder);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
