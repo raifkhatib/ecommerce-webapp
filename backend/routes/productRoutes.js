@@ -7,7 +7,9 @@ const { protect, adminOnly } = require('../middleware/auth');
 router.get('/', async (req, res) => {
   try {
     const { search } = req.query;
-    const filter = search ? { name: { $regex: search, $options: 'i' } } : {};
+    const filter = search
+      ? { name: { $regex: search, $options: 'i' } }
+      : {};
     const products = await Product.find(filter);
     return res.json(products);
   } catch (error) {

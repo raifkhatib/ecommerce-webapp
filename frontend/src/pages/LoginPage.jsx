@@ -1,5 +1,5 @@
-﻿import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance.js";
 import { useAuth } from "../context/AuthContext.jsx";
 
@@ -26,30 +26,38 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="page">
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit} className="form">
-        <label>
-          Email
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Login</button>
-        {error && <p className="error">{error}</p>}
-      </form>
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-logo">ShopAll</div>
+        <h1>Login</h1>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Email
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+            />
+          </label>
+          <button type="submit" className="btn-primary">
+            Login
+          </button>
+          {error && <p className="error-text">{error}</p>}
+        </form>
+        <p className="auth-footer">
+          New to ShopAll? <Link to="/register">Create an account</Link>
+        </p>
+      </div>
     </div>
   );
 }

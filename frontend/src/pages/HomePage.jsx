@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance.js";
 import ProductCard from "../components/ProductCard.jsx";
@@ -38,26 +38,94 @@ export default function HomePage() {
     };
   }, [searchTerm]);
 
-  if (loading) {
-    return (
-      <div className="page">
-        <p>Loading products...</p>
-      </div>
-    );
-  }
-
   return (
-    <div className="page">
-      <h1>Products</h1>
-      {products.length === 0 ? (
-        <p>No products found.</p>
-      ) : (
-        <div className="grid">
-          {products.map((product) => (
-            <ProductCard key={product._id || product.id} product={product} />
-          ))}
+    <div>
+      <section className="hero">
+        <div className="container">
+          <h1>Welcome to ShopAll</h1>
+          <p>Your one-stop shop for everything you need</p>
+          <div className="hero-actions">
+            <a href="#products" className="btn-accent">
+              Shop Now
+            </a>
+            <a href="#about" className="btn-secondary btn-outline">
+              Learn More
+            </a>
+          </div>
         </div>
-      )}
+      </section>
+
+      <section className="features">
+        <div className="container">
+          <h2>Why Choose ShopAll?</h2>
+          <div className="features-grid">
+            <div className="card feature-card">
+              <div className="feature-icon">??</div>
+              <h3>Fast Delivery</h3>
+              <p>Get your orders delivered quickly and safely to your doorstep</p>
+            </div>
+            <div className="card feature-card">
+              <div className="feature-icon">??</div>
+              <h3>Secure Payment</h3>
+              <p>Shop with confidence using our PayPal Sandbox secure checkout</p>
+            </div>
+            <div className="card feature-card">
+              <div className="feature-icon">??</div>
+              <h3>Best Prices</h3>
+              <p>We offer competitive prices across all product categories</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" className="about">
+        <div className="container about-content">
+          <div className="about-text">
+            <h2>About ShopAll</h2>
+            <p>
+              ShopAll is a modern e-commerce platform offering electronics, clothing, books and more,
+              with a commitment to quality, trusted brands, and customer satisfaction on every order.
+            </p>
+          </div>
+          <div className="stats-grid">
+            <div className="card stat-card">
+              <div className="stat-number">500+</div>
+              <div>Products</div>
+            </div>
+            <div className="card stat-card">
+              <div className="stat-number">10K+</div>
+              <div>Customers</div>
+            </div>
+            <div className="card stat-card">
+              <div className="stat-number">50+</div>
+              <div>Categories</div>
+            </div>
+            <div className="card stat-card">
+              <div className="stat-number">24/7</div>
+              <div>Support</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="products" className="products-section">
+        <div className="container">
+          <div className="section-header">
+            <h2>{searchTerm ? `Search results for: ${searchTerm}` : "Our Products"}</h2>
+          </div>
+          {loading ? (
+            <div className="loading">Loading products...</div>
+          ) : products.length === 0 ? (
+            <div className="loading">No products found.</div>
+          ) : (
+            <div className="products-grid">
+              {products.map((product) => (
+                <ProductCard key={product._id || product.id} product={product} />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   );
 }

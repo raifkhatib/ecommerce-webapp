@@ -1,5 +1,5 @@
-﻿import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance.js";
 
 export default function RegisterPage() {
@@ -25,39 +25,47 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="page">
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit} className="form">
-        <label>
-          Name
-          <input
-            type="text"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Email
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Create Account</button>
-        {error && <p className="error">{error}</p>}
-      </form>
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-logo">ShopAll</div>
+        <h1>Create Account</h1>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Name
+            <input
+              type="text"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Email
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
+          </label>
+          <label>
+            Password
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+            />
+          </label>
+          <button type="submit" className="btn-primary">
+            Create Account
+          </button>
+          {error && <p className="error-text">{error}</p>}
+        </form>
+        <p className="auth-footer">
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
+      </div>
     </div>
   );
 }

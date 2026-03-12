@@ -1,5 +1,5 @@
-﻿import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance.js";
 import { useCart } from "../context/CartContext.jsx";
 
@@ -42,21 +42,19 @@ export default function ProductDetailPage() {
 
   if (loading) {
     return (
-      <div className="page">
-        <p>Loading product...</p>
-      </div>
+      <div className="loading">Loading product...</div>
     );
   }
 
   if (!product) {
     return (
-      <div className="page">
-        <p>Product not found.</p>
-      </div>
+      <div className="loading">Product not found.</div>
     );
   }
 
   const stock = Number(product.stock) || 0;
+  const stockLabel = stock > 10 ? "In stock" : stock > 0 ? "Low stock" : "Out of stock";
+  const stockClass = stock > 10 ? "stock--high" : stock > 0 ? "stock--low" : "stock--out";
 
   const handleQtyChange = (event) => {
     let value = Number(event.target.value) || 1;
@@ -74,34 +72,55 @@ export default function ProductDetailPage() {
   };
 
   return (
-    <div className="page product-detail">
-      <div className="product-detail__image">
-        {product.imageUrl ? (
-          <img src={product.imageUrl} alt={product.name} />
-        ) : (
-          <div className="product-detail__placeholder">No Image</div>
-        )}
+    <section className="product-detail">
+      <div className="container">
+        <div className="breadcrumb">
+          <Link to="/">Home</Link> &gt;{" "}
+          {product.category ? (
+            <Link to={`/?search=${encodeURIComponent(product.category)}`}>{product.category}</Link>
+          ) : (
+            "Category"
+          )}
+          {" "}&gt; {product.name}
+        </div>
+        <div className="product-detail__layout">
+          <div className="product-detail__image">
+            {product.imageUrl ? (
+              <img src={product.imageUrl} alt={product.name} />
+            ) : (
+              <img
+                src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?w=400"
+                alt="Placeholder"
+              />
+            )}
+          </div>
+          <div className="product-detail__info">
+            <span className="badge">{product.category}</span>
+            <h1>{product.name}</h1>
+            <div className="product-card__price">${Number(product.price).toFixed(2)}</div>
+            <p>{product.description}</p>
+            <p className={`product-card__stock ${stockClass}`}>{stockLabel}</p>
+            <div className="divider" />
+            <div className="form-field">
+              <label htmlFor="qty">Quantity</label>
+              <input
+                id="qty"
+                type="number"
+                min="1"
+                max={stock || undefined}
+                value={qty}
+                onChange={handleQtyChange}
+              />
+            </div>
+            <button type="button" className="btn-accent btn-block" onClick={handleAddToCart} disabled={stock === 0}>
+              Add to Cart
+            </button>
+            <Link to="/" className="btn-secondary btn-block">
+              Back to Products
+            </Link>
+          </div>
+        </div>
       </div>
-      <div className="product-detail__info">
-        <h1>{product.name}</h1>
-        <p>{product.description}</p>
-        <p>Price: ${Number(product.price).toFixed(2)}</p>
-        <p>Stock: {stock}</p>
-        <p>Category: {product.category}</p>
-        <label>
-          Quantity
-          <input
-            type="number"
-            min="1"
-            max={stock || undefined}
-            value={qty}
-            onChange={handleQtyChange}
-          />
-        </label>
-        <button type="button" onClick={handleAddToCart} disabled={stock === 0}>
-          Add to Cart
-        </button>
-      </div>
-    </div>
+    </section>
   );
 }
