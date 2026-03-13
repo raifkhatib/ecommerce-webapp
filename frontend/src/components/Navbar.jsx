@@ -23,7 +23,7 @@ const Navbar = () => {
     setSearchOpen(false);
     setDropdownOpen(false);
     setUserDropdownOpen(false);
-  }, [location.pathname]);
+  }, [location.pathname, location.search]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -159,7 +159,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <span style={{ color: '#f0a500', fontWeight: 'bold', padding: '0.5rem 0' }}>{user?.name}</span>
+              <span className="mobile-menu__name">{user?.name}</span>
               <Link to="/orders">My Orders</Link>
               <button onClick={handleLogout}>Logout</button>
             </>
