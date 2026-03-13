@@ -72,9 +72,11 @@ export default function Navbar() {
         <div className="container navbar-bottom__content">
           <nav className="navbar-links">
             <Link to="/">Home</Link>
-            <Link to="/?search=Electronics">Electronics</Link>
-            <Link to="/?search=Clothing">Clothing</Link>
-            <Link to="/?search=Books">Books</Link>
+            <Link to="/?category=Electronics">Electronics</Link>
+            <Link to="/?category=Clothing">Clothing</Link>
+            <Link to="/?category=Books">Books</Link>
+            <Link to="/?category=Sports">Sports</Link>
+            <Link to="/?category=Home">Home</Link>
           </nav>
           <div className="navbar-actions">
             {isAdmin && (

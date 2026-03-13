@@ -10,7 +10,7 @@ export default function CartPage() {
   if (cartItems.length === 0) {
     return (
       <div className="container cart-empty">
-        <div className="cart-empty__icon">??</div>
+        <div className="cart-empty__icon">🛒</div>
         <h1>Shopping Cart</h1>
         <p>Your cart is empty.</p>
         <Link to="/" className="btn-primary">

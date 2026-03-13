@@ -138,6 +138,7 @@ const seedDB = async () => {
     await connectDB();
     await Product.deleteMany({});
     await Product.insertMany(sampleProducts);
+    await Product.createIndexes();
     console.log('Database seeded successfully with sample products!');
     process.exit(0);
   } catch (error) {

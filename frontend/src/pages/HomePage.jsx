@@ -5,7 +5,8 @@ import ProductCard from "../components/ProductCard.jsx";
 
 export default function HomePage() {
   const [searchParams] = useSearchParams();
-  const searchTerm = searchParams.get("search") || "";
+  const search = searchParams.get("search") || "";
+  const category = searchParams.get("category") || "";
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -15,10 +16,24 @@ export default function HomePage() {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const query = searchTerm ? `?search=${encodeURIComponent(searchTerm)}` : "";
-        const { data } = await axiosInstance.get(`/products${query}`);
+        const search = searchParams.get('search') || '';
+        const category = searchParams.get('category') || '';
+
+        let url = '/products';
+        const params = [];
+        if (search) params.push(`search=${encodeURIComponent(search)}`);
+        if (category) params.push(`category=${encodeURIComponent(category)}`);
+        if (params.length > 0) url += `?${params.join('&')}`;
+
+        const { data } = await axiosInstance.get(url);
         if (isActive) {
-          setProducts(Array.isArray(data) ? data : []);
+          setProducts(data);
+          if (search || category) {
+            setTimeout(() => {
+              const section = document.getElementById('products-section');
+              if (section) section.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+          }
         }
       } catch {
         if (isActive) {
@@ -36,7 +51,7 @@ export default function HomePage() {
     return () => {
       isActive = false;
     };
-  }, [searchTerm]);
+  }, [search, category]);
 
   return (
     <div>
@@ -60,17 +75,17 @@ export default function HomePage() {
           <h2>Why Choose ShopAll?</h2>
           <div className="features-grid">
             <div className="card feature-card">
-              <div className="feature-icon">??</div>
+              <div className="feature-icon">🚚</div>
               <h3>Fast Delivery</h3>
               <p>Get your orders delivered quickly and safely to your doorstep</p>
             </div>
             <div className="card feature-card">
-              <div className="feature-icon">??</div>
+              <div className="feature-icon">🔒</div>
               <h3>Secure Payment</h3>
               <p>Shop with confidence using our PayPal Sandbox secure checkout</p>
             </div>
             <div className="card feature-card">
-              <div className="feature-icon">??</div>
+              <div className="feature-icon">💰</div>
               <h3>Best Prices</h3>
               <p>We offer competitive prices across all product categories</p>
             </div>
@@ -109,9 +124,15 @@ export default function HomePage() {
       </section>
 
       <section id="products" className="products-section">
-        <div className="container">
+        <div id="products-section" className="container">
           <div className="section-header">
-            <h2>{searchTerm ? `Search results for: ${searchTerm}` : "Our Products"}</h2>
+            <h2>
+              {search
+                ? `Search results for: "${search}"`
+                : category
+                  ? `Category: "${category}"`
+                  : "Our Products"}
+            </h2>
           </div>
           {loading ? (
             <div className="loading">Loading products...</div>

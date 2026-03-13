@@ -77,7 +77,7 @@ export default function ProductDetailPage() {
         <div className="breadcrumb">
           <Link to="/">Home</Link> &gt;{" "}
           {product.category ? (
-            <Link to={`/?search=${encodeURIComponent(product.category)}`}>{product.category}</Link>
+            <Link to={`/?category=${encodeURIComponent(product.category)}`}>{product.category}</Link>
           ) : (
             "Category"
           )}
