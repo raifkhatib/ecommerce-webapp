@@ -519,6 +519,10 @@ select:focus {
   margin-bottom: 0.8rem;
 }
 
+.about-page {
+  min-height: 100vh;
+}
+
 .about {
   background: var(--background);
   padding: 3rem 2rem;
@@ -560,6 +564,10 @@ select:focus {
   font-size: 1.6rem;
   font-weight: 700;
   color: var(--accent);
+}
+
+.about-page {
+  min-height: 100vh;
 }
 
 .about-hero {
@@ -1131,6 +1139,24 @@ select:focus {
 }
 .contact-success p {
   color: var(--text-muted);
+}
+
+/* ── Contact Map ── */
+.contact-map {
+  padding: 0 2rem 4rem;
+  background: var(--background);
+}
+.contact-map__placeholder {
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
 @media (max-width: 900px) {

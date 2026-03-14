@@ -1,6 +1,6 @@
 export default function AboutPage() {
   return (
-    <main>
+    <main className="about-page">
       <section className="about-hero">
         <div className="container">
           <h1>About ShopAll</h1>
@@ -42,23 +42,17 @@ export default function AboutPage() {
           </p>
           <div className="about-mission__cards">
             <div className="card mission-card">
-              <div className="mission-icon">
-                <span className="mission-icon-text">★</span>
-              </div>
+              <div className="mission-icon">✨</div>
               <h3>Quality</h3>
               <p>Curated products backed by dependable quality and consistency.</p>
             </div>
             <div className="card mission-card">
-              <div className="mission-icon">
-                <span className="mission-icon-text">♦</span>
-              </div>
+              <div className="mission-icon">🤝</div>
               <h3>Trust</h3>
               <p>Secure shopping, transparent policies, and reliable support.</p>
             </div>
             <div className="card mission-card">
-              <div className="mission-icon">
-                <span className="mission-icon-text">►</span>
-              </div>
+              <div className="mission-icon">🚀</div>
               <h3>Innovation</h3>
               <p>Modern experiences with continuous improvements that save time.</p>
             </div>
@@ -71,30 +65,22 @@ export default function AboutPage() {
           <h2>Our Values</h2>
           <div className="about-values__grid">
             <div className="card feature-card">
-              <div className="feature-icon">
-                <span className="mission-icon-text">◎</span>
-              </div>
+              <div className="feature-icon">🎯</div>
               <h3>Customer First</h3>
               <p>Customers stay at the center of every decision we make.</p>
             </div>
             <div className="card feature-card">
-              <div className="feature-icon">
-                <span className="mission-icon-text">◉</span>
-              </div>
+              <div className="feature-icon">🌍</div>
               <h3>Global Reach</h3>
               <p>Reliable delivery and broad access wherever you live.</p>
             </div>
             <div className="card feature-card">
-              <div className="feature-icon">
-                <span className="mission-icon-text">◈</span>
-              </div>
+              <div className="feature-icon">💡</div>
               <h3>Transparency</h3>
               <p>Honest pricing, clear communication, and no surprises.</p>
             </div>
             <div className="card feature-card">
-              <div className="feature-icon">
-                <span className="mission-icon-text">◆</span>
-              </div>
+              <div className="feature-icon">🏆</div>
               <h3>Excellence</h3>
               <p>High standards in every order, from packing to delivery.</p>
             </div>
