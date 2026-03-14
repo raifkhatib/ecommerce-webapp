@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance.js";
 import { useCart } from "../context/CartContext.jsx";
+import SkeletonDetail from '../components/SkeletonDetail';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -42,7 +43,7 @@ export default function ProductDetailPage() {
 
   if (loading) {
     return (
-      <div className="loading">Loading product...</div>
+      <SkeletonDetail />
     );
   }
 

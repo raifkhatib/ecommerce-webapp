@@ -1,7 +1,9 @@
 ﻿import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Toaster } from 'react-hot-toast';
 import Navbar from "./components/Navbar.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import AdminRoute from "./components/AdminRoute.jsx";
+import Footer from './components/Footer';
 import HomePage from "./pages/HomePage.jsx";
 import AboutPage from "./pages/AboutPage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
@@ -16,6 +18,7 @@ import AdminAddProductPage from "./pages/AdminAddProductPage.jsx";
 export default function App() {
   return (
     <BrowserRouter>
+      <Toaster position="top-right" toastOptions={{ duration: 3000, style: { borderRadius: '8px', background: '#333', color: '#fff' } }} />
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -33,6 +36,7 @@ export default function App() {
           <Route path="/admin/add-product" element={<AdminAddProductPage />} />
         </Route>
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

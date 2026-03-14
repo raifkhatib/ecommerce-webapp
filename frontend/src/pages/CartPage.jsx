@@ -10,12 +10,10 @@ export default function CartPage() {
   if (cartItems.length === 0) {
     return (
       <div className="container cart-empty">
-        <div className="cart-empty__icon">🛒</div>
-        <h1>Shopping Cart</h1>
-        <p>Your cart is empty.</p>
-        <Link to="/" className="btn-primary">
-          Continue Shopping
-        </Link>
+        <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🛒</div>
+        <h2>Your Cart is Empty</h2>
+        <p className="text-muted" style={{ marginBottom: '1.5rem' }}>Looks like you have not added anything yet. Start browsing our products!</p>
+        <Link to="/" className="btn-accent">Start Shopping</Link>
       </div>
     );
   }

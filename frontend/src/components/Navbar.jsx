@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
@@ -49,6 +50,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
+    toast.success('Logged out');
     navigate('/');
   };
 

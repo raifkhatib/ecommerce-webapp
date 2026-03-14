@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 import axiosInstance from "../api/axiosInstance.js";
 import { useAuth } from "../context/AuthContext.jsx";
 
@@ -19,8 +20,10 @@ export default function LoginPage() {
         password
       });
       login(data.token, data.user);
+      toast.success('Login successful!');
       navigate("/");
     } catch (err) {
+      toast.error(err.response?.data?.message || 'Login failed');
       setError(err.response?.data?.message || "Login failed");
     }
   };

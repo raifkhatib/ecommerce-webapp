@@ -35,7 +35,16 @@ export default function OrderHistoryPage() {
   }, []);
 
   if (loading) {
-    return <div className="loading">Loading orders...</div>;
+    return (
+      <section className="orders-page">
+        <div className="container">
+          <div className="skeleton skeleton-row" />
+          <div className="skeleton skeleton-row" />
+          <div className="skeleton skeleton-row" />
+          <div className="skeleton skeleton-row" />
+        </div>
+      </section>
+    );
   }
 
   return (
@@ -48,11 +57,11 @@ export default function OrderHistoryPage() {
           </div>
         </div>
         {orders.length === 0 ? (
-          <div className="cart-empty">
-            <p>You have no orders yet.</p>
-            <Link to="/" className="btn-accent">
-              Shop Now
-            </Link>
+          <div className="empty-state">
+            <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📦</div>
+            <h2>No Orders Yet</h2>
+            <p className="text-muted" style={{ marginBottom: '1.5rem' }}>When you make your first purchase it will appear here.</p>
+            <Link to="/" className="btn-accent">Shop Now</Link>
           </div>
         ) : (
           <table className="data-table">

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 import axiosInstance from "../api/axiosInstance.js";
 
 export default function RegisterPage() {
@@ -18,8 +19,10 @@ export default function RegisterPage() {
         email,
         password
       });
+      toast.success('Account created! Please login.');
       navigate("/login");
     } catch (err) {
+      toast.error(err.response?.data?.message || 'Registration failed');
       setError(err.response?.data?.message || "Registration failed");
     }
   };

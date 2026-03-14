@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance.js";
 import ProductCard from "../components/ProductCard.jsx";
+import SkeletonCard from '../components/SkeletonCard';
 
 const categories = [
   { name: 'Electronics', icon: '💻', image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=400&h=300&fit=crop' },
@@ -179,9 +180,16 @@ export default function HomePage() {
             </h2>
           </div>
           {loading ? (
-            <div className="loading">Loading products...</div>
+            <div className="products-grid">
+              {Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)}
+            </div>
           ) : products.length === 0 ? (
-            <div className="loading">No products found.</div>
+            <div className="empty-state">
+              <div style={{ fontSize: '4rem' }}>🔍</div>
+              <h3>No products found</h3>
+              <p className="text-muted">Try adjusting your search or filter to find what you are looking for.</p>
+              <Link to="/" className="btn-accent">Clear Filters</Link>
+            </div>
           ) : (
             <div className="products-grid">
               {products.map((product) => (

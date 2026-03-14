@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 import axiosInstance from "../api/axiosInstance.js";
 
 const initialForm = {
@@ -36,9 +37,11 @@ export default function AdminAddProductPage() {
         stock: Number(form.stock),
         category: form.category
       });
+      toast.success('Product created!');
       setSuccess("Product created successfully.");
       setForm(initialForm);
     } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to create product');
       setError(err.response?.data?.message || "Failed to create product");
     }
   };

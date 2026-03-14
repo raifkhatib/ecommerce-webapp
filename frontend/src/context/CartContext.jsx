@@ -1,4 +1,5 @@
 ﻿import { createContext, useContext, useMemo, useState } from "react";
+import toast from 'react-hot-toast';
 
 const CartContext = createContext(null);
 
@@ -37,6 +38,7 @@ export function CartProvider({ children }) {
         }
       ];
     });
+    toast.success('Added to cart!');
   };
 
   const removeFromCart = (productId) => {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useCart } from "../context/CartContext";
 import axiosInstance from "../api/axiosInstance";
@@ -65,14 +66,17 @@ export default function CheckoutPage() {
             clearCart();
             navigate("/orders");
           } catch (err) {
+            toast.error('Payment could not be completed.');
             setError("Payment could not be completed. Please try again.");
             setProcessing(false);
           }
         }}
         onCancel={() => {
+          toast.error('Payment cancelled.');
           setError("Payment cancelled. You can try again.");
         }}
         onError={() => {
+          toast.error('Payment failed.');
           setError(
             "Payment failed. Please try again or use a different payment method."
           );
