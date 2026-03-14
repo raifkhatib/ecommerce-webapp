@@ -1415,6 +1415,10 @@ select:focus {
 
   .categories-grid { grid-template-columns: repeat(2, 1fr); }
   .category-card { height: 220px; }
+
+  .cart-layout { flex-direction: column; }
+  .product-detail__layout { grid-template-columns: 1fr; }
+  .skeleton-detail { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 520px) {
@@ -1425,4 +1429,8 @@ select:focus {
   .categories-grid { grid-template-columns: 1fr; }
   .category-card { height: 200px; }
   .footer-grid { grid-template-columns: 1fr; }
+
+  .hero h1 { font-size: 2rem; }
+  .hero p { font-size: 1rem; }
+  .products-grid { grid-template-columns: 1fr; }
 }

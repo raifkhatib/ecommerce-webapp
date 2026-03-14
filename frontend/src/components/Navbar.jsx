@@ -153,7 +153,7 @@ const Navbar = () => {
           <Link to="/about">About Us</Link>
           <Link to="/contact">Contact</Link>
           {isAdmin && <Link to="/admin/add-product">+ Add Product</Link>}
-          <Link to="/cart">Cart Cart {totalCount > 0 && <span className="badge">{totalCount}</span>}</Link>
+          <Link to="/cart">Cart {totalCount > 0 && <span className="badge">{totalCount}</span>}</Link>
           {!token ? (
             <>
               <Link to="/login">Login</Link>
