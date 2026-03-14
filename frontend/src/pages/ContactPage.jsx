@@ -68,6 +68,7 @@ const ContactPage = () => {
               <div className="contact-success">
                 <h3>Message Sent!</h3>
                 <p>Thank you for reaching out. We will get back to you within 24 hours.</p>
+                <button className="btn-primary" onClick={() => setSubmitted(false)}>Send Another Message</button>
               </div>
             ) : (
               <form className="contact-form" onSubmit={handleSubmit}>
@@ -85,7 +86,7 @@ const ContactPage = () => {
                 <div className="form-group">
                   <label>Email Address</label>
                   <input
-                    type="text"
+                    type="email"
                     name="email"
                     value={form.email}
                     onChange={handleChange}

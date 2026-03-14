@@ -566,10 +566,6 @@ select:focus {
   color: var(--accent);
 }
 
-.about-page {
-  min-height: 100vh;
-}
-
 .about-hero {
   background: linear-gradient(135deg, #1a3c5e, #2d6a9f);
   color: var(--white);
