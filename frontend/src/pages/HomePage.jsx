@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance.js";
 import ProductCard from "../components/ProductCard.jsx";
+
+const categories = [
+  { name: 'Electronics', icon: '💻', image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=400&h=300&fit=crop' },
+  { name: 'Clothing', icon: '👕', image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=300&fit=crop' },
+  { name: 'Books', icon: '📚', image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=300&fit=crop' },
+  { name: 'Sports', icon: '⚽', image: 'https://images.unsplash.com/photo-1461896836934-bd45ba8fcf9b?w=400&h=300&fit=crop' },
+  { name: 'Home', icon: '🏠', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop' },
+];
 
 export default function HomePage() {
   const [searchParams] = useSearchParams();
@@ -9,6 +17,12 @@ export default function HomePage() {
   const category = searchParams.get("category") || "";
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const [allProducts, setAllProducts] = useState([]);
+
+  useEffect(() => {
+    axiosInstance.get('/products').then(({ data }) => setAllProducts(data)).catch(() => {});
+  }, []);
 
   useEffect(() => {
     let isActive = true;
@@ -89,6 +103,36 @@ export default function HomePage() {
               <h3>Best Prices</h3>
               <p>We offer competitive prices across all product categories</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="categories-section">
+        <div className="container">
+          <h2>Shop by Category</h2>
+          <div className="categories-grid">
+            {categories.map((cat) => (
+              <div
+                key={cat.name}
+                className="category-card"
+                role="button"
+                tabIndex={0}
+                onClick={() => navigate('/?category=' + cat.name)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') navigate('/?category=' + cat.name);
+                }}
+                style={{ backgroundImage: 'url(' + cat.image + ')' }}
+              >
+                <div className="category-card__overlay">
+                  <span className="category-card__icon">{cat.icon}</span>
+                  <h3 className="category-card__name">{cat.name}</h3>
+                  <p className="category-card__count">
+                    {allProducts.filter((p) => p.category === cat.name).length} Products
+                  </p>
+                  <span className="category-card__cta">Shop Now →</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
