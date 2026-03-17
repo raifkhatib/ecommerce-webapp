@@ -1461,3 +1461,14 @@ select:focus {
 .sort-select:focus {
   border-color: var(--secondary);
 }
+
+/* ── Related Products ── */
+.related-products {
+  padding: 3rem 2rem;
+  background: var(--background);
+}
+.related-products h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark);
+}

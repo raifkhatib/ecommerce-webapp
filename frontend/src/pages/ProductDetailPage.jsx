@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance.js";
 import { useCart } from "../context/CartContext.jsx";
 import SkeletonDetail from '../components/SkeletonDetail';
+import ProductCard from '../components/ProductCard';
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -11,6 +12,7 @@ export default function ProductDetailPage() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [qty, setQty] = useState(1);
+  const [relatedProducts, setRelatedProducts] = useState([]);
 
   useEffect(() => {
     let isActive = true;
@@ -40,7 +42,17 @@ export default function ProductDetailPage() {
       isActive = false;
     };
   }, [id]);
+useEffect(() => {
+    if (product) {
+      axiosInstance.get(`/products?category=${encodeURIComponent(product.category)}`)
+        .then(({ data }) => {
+          setRelatedProducts(data.filter(p => p._id !== product._id).slice(0, 4));
+        })
+        .catch(() => {});
+    }
+  }, [product]);
 
+  
   if (loading) {
     return (
       <SkeletonDetail />
@@ -122,6 +134,18 @@ export default function ProductDetailPage() {
           </div>
         </div>
       </div>
+      {relatedProducts.length > 0 && (
+        <section className="related-products">
+          <div className="container">
+            <h2>Related Products</h2>
+            <div className="products-grid">
+              {relatedProducts.map(p => (
+                <ProductCard key={p._id} product={p} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </section>
   );
 }
