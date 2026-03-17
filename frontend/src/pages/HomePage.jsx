@@ -18,8 +18,17 @@ export default function HomePage() {
   const category = searchParams.get("category") || "";
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sortBy, setSortBy] = useState('newest');
   const navigate = useNavigate();
   const [allProducts, setAllProducts] = useState([]);
+
+  const sortedProducts = [...products].sort((a, b) => {
+    if (sortBy === 'price-asc') return a.price - b.price;
+    if (sortBy === 'price-desc') return b.price - a.price;
+    if (sortBy === 'name-asc') return a.name.localeCompare(b.name);
+    if (sortBy === 'newest') return new Date(b.createdAt) - new Date(a.createdAt);
+    return 0;
+  });
 
   useEffect(() => {
     axiosInstance.get('/products').then(({ data }) => setAllProducts(data)).catch(() => {});
@@ -191,11 +200,26 @@ export default function HomePage() {
               <Link to="/" className="btn-accent">Clear Filters</Link>
             </div>
           ) : (
-            <div className="products-grid">
-              {products.map((product) => (
-                <ProductCard key={product._id || product.id} product={product} />
-              ))}
-            </div>
+            <>
+              <div className="products-toolbar">
+                <p className="products-count">{products.length} Products</p>
+                <select
+                  className="sort-select"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                >
+                  <option value="newest">Newest First</option>
+                  <option value="price-asc">Price: Low to High</option>
+                  <option value="price-desc">Price: High to Low</option>
+                  <option value="name-asc">Name: A to Z</option>
+                </select>
+              </div>
+              <div className="products-grid">
+                {sortedProducts.map((product) => (
+                  <ProductCard key={product._id || product.id} product={product} />
+                ))}
+              </div>
+            </>
           )}
         </div>
       </section>
